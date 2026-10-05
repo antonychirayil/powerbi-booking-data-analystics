@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.4.0/schema.json",
+  "name": "a7b6ad964ffa65a7d1ae",
+  "position": {
+    "x": 20,
+    "y": 20,
+    "z": 0,
+    "width": 360,
+    "height": 110,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Total Booking Value"
+                }
+              },
+              "queryRef": "Fact_Rides.Total Booking Value",
+              "nativeQueryRef": "Total Booking Value"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

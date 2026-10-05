@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "f07c6df505bc52b5d863",
+  "position": {
+    "x": 1430,
+    "y": 20,
+    "z": 3000,
+    "height": 110,
+    "width": 450,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Rated Rides"
+                }
+              },
+              "queryRef": "Fact_Rides.Rated Rides",
+              "nativeQueryRef": "Rated Rides"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

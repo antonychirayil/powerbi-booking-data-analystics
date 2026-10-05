@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "b14492838f444f5f0120",
+  "position": {
+    "x": 23.999999999999996,
+    "y": 984,
+    "z": 7000,
+    "height": 95.999999999999986,
+    "width": 1872,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Rating Distribution Insight"
+                }
+              },
+              "queryRef": "Fact_Rides.Rating Distribution Insight",
+              "nativeQueryRef": "Rating Distribution Insight"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "4379b476d0f7f4d3ef42",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_Rides"
+              }
+            },
+            "Property": "Rating Distribution Insight"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

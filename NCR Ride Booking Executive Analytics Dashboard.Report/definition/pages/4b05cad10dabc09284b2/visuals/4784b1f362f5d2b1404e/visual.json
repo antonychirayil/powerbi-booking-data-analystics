@@ -1,0 +1,93 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "4784b1f362f5d2b1404e",
+  "position": {
+    "x": 20,
+    "y": 560,
+    "z": 4000,
+    "height": 440,
+    "width": 1140,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Vehicle"
+                    }
+                  },
+                  "Property": "Vehicle Type"
+                }
+              },
+              "queryRef": "Dim_Vehicle.Vehicle Type",
+              "nativeQueryRef": "Vehicle Type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Vehicle"
+                    }
+                  },
+                  "Property": "Vehicle Category"
+                }
+              },
+              "queryRef": "Dim_Vehicle.Vehicle Category",
+              "nativeQueryRef": "Vehicle Category"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Total Ride Distance"
+                }
+              },
+              "queryRef": "Fact_Rides.Total Ride Distance",
+              "nativeQueryRef": "Total Ride Distance"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Completed Ride Distance"
+                }
+              },
+              "queryRef": "Fact_Rides.Completed Ride Distance",
+              "nativeQueryRef": "Completed Ride Distance"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Distance Share %"
+                }
+              },
+              "queryRef": "Fact_Rides.Distance Share %",
+              "nativeQueryRef": "Distance Share %"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "dcf51ee0c3cea2f19e9e",
+  "position": {
+    "x": 1570,
+    "y": 20,
+    "z": 5000,
+    "height": 110,
+    "width": 300,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Incomplete Rides"
+                }
+              },
+              "queryRef": "Fact_Rides.Incomplete Rides",
+              "nativeQueryRef": "Incomplete Rides"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

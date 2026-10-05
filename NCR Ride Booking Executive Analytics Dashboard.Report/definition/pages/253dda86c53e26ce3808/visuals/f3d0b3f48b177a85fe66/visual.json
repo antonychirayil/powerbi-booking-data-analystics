@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "f3d0b3f48b177a85fe66",
+  "position": {
+    "x": 960,
+    "y": 904,
+    "z": 10000,
+    "height": 176,
+    "width": 928,
+    "tabOrder": 10000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Highest Cancellation Vehicle Insight"
+                }
+              },
+              "queryRef": "Fact_Rides.Highest Cancellation Vehicle Insight",
+              "nativeQueryRef": "Highest Cancellation Vehicle Insight"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "cbe6501b7399836813d9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_Rides"
+              }
+            },
+            "Property": "Highest Cancellation Vehicle Insight"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

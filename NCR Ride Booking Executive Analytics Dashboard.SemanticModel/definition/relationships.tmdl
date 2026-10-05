@@ -1,0 +1,16 @@
+relationship Dim_Date_Fact_Rides
+	fromColumn: Fact_Rides.'Ride Date'
+	toColumn: Dim_Date.Date
+
+relationship Dim_Booking_Status_Fact_Rides
+	fromColumn: Fact_Rides.'Booking Status'
+	toColumn: Dim_Booking_Status.'Booking Status'
+
+relationship Dim_Vehicle_Fact_Rides
+	fromColumn: Fact_Rides.'Vehicle Type'
+	toColumn: Dim_Vehicle.'Vehicle Type'
+
+relationship Dim_Payment_Method_Fact_Rides
+	fromColumn: Fact_Rides.'Payment Method'
+	toColumn: Dim_Payment_Method.'Payment Method'
+

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "6ab0fbb319740890943e",
+  "position": {
+    "x": 20,
+    "y": 580,
+    "z": 5000,
+    "height": 380,
+    "width": 920,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Driver Rating Band"
+                }
+              },
+              "queryRef": "Fact_Rides.Driver Rating Band",
+              "nativeQueryRef": "Driver Rating Band",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Rated Rides"
+                }
+              },
+              "queryRef": "Fact_Rides.Rated Rides",
+              "nativeQueryRef": "Rated Rides"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

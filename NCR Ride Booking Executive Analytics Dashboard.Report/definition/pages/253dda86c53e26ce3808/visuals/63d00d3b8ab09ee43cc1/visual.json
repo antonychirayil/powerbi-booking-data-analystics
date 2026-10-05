@@ -1,0 +1,51 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "63d00d3b8ab09ee43cc1",
+  "position": {
+    "x": 495,
+    "y": 820,
+    "z": 12000,
+    "height": 240,
+    "width": 455,
+    "tabOrder": 12000
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Vehicle"
+                    }
+                  },
+                  "Property": "Vehicle Type"
+                }
+              },
+              "queryRef": "Dim_Vehicle.Vehicle Type",
+              "nativeQueryRef": "Vehicle Type",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "general": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "syncGroup": {
+      "groupName": "Vehicle Type",
+      "fieldChanges": true,
+      "filterChanges": true
+    }
+  },
+  "isHidden": true
+}

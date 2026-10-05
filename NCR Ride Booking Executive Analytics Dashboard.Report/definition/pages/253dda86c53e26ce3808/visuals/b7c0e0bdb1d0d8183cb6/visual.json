@@ -1,0 +1,44 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "b7c0e0bdb1d0d8183cb6",
+  "position": {
+    "x": 970,
+    "y": 820,
+    "z": 13000,
+    "height": 240,
+    "width": 455,
+    "tabOrder": 13000
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Booking_Status"
+                    }
+                  },
+                  "Property": "Booking Status"
+                }
+              },
+              "queryRef": "Dim_Booking_Status.Booking Status",
+              "nativeQueryRef": "Booking Status",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "syncGroup": {
+      "groupName": "Booking Status",
+      "fieldChanges": true,
+      "filterChanges": true
+    }
+  },
+  "isHidden": true
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "e0978a0447770226461b",
+  "position": {
+    "x": 960,
+    "y": 600,
+    "z": 9000,
+    "height": 300,
+    "width": 920,
+    "tabOrder": 9000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Date"
+                    }
+                  },
+                  "Property": "Date"
+                }
+              },
+              "queryRef": "Dim_Date.Date",
+              "nativeQueryRef": "Date",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Cancelled by Customer"
+                }
+              },
+              "queryRef": "Fact_Rides.Cancelled by Customer",
+              "nativeQueryRef": "Cancelled by Customer"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Cancelled by Driver"
+                }
+              },
+              "queryRef": "Fact_Rides.Cancelled by Driver",
+              "nativeQueryRef": "Cancelled by Driver"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

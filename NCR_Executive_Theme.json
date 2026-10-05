@@ -1,0 +1,192 @@
+{
+  "name": "NCR Ride Booking – Executive",
+  "dataColors": [
+    "#0E7C86",
+    "#1F3A5F",
+    "#D08A3E",
+    "#6B5B95",
+    "#4F9D69",
+    "#B85C56",
+    "#3E6E8E",
+    "#8C8F6B"
+  ],
+  "background": "#FFFFFF",
+  "backgroundLight": "#F5F6F8",
+  "backgroundNeutral": "#E7EEED",
+  "foreground": "#101C1B",
+  "foregroundNeutralSecondary": "#5B6B69",
+  "foregroundNeutralTertiary": "#8FA09D",
+  "foregroundLight": "#FFFFFF",
+  "tableAccent": "#0E7C86",
+  "good": "#2C7A57",
+  "neutral": "#C98A2C",
+  "bad": "#AE4238",
+  "maximum": "#0E7C86",
+  "center": "#F5F6F8",
+  "minimum": "#AE4238",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 32,
+      "color": "#101C1B"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 13,
+      "color": "#101C1B"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 10,
+      "color": "#5B6B69"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#101C1B"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          { "show": true, "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }
+        ],
+        "border": [
+          { "show": true, "color": { "solid": { "color": "#E4E9EA" } }, "radius": 6 }
+        ],
+        "dropShadow": [
+          { "show": false }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontSize": 13,
+            "fontFamily": "Segoe UI Semibold, Segoe UI, wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+            "titleColor": { "solid": { "color": "#101C1B" } },
+            "alignment": "left",
+            "background": { "solid": { "color": "#FFFFFF" } }
+          }
+        ],
+        "categoryAxis": [
+          {
+            "gridlineShow": false,
+            "fontFamily": "Segoe UI",
+            "fontSize": 10,
+            "labelColor": { "solid": { "color": "#5B6B69" } },
+            "axisColor": { "solid": { "color": "#C7D1D0" } },
+            "showAxisTitle": false
+          }
+        ],
+        "valueAxis": [
+          {
+            "gridlineShow": true,
+            "gridlineColor": { "solid": { "color": "#EDF1F1" } },
+            "gridlineStyle": "solid",
+            "fontFamily": "Segoe UI",
+            "fontSize": 10,
+            "labelColor": { "solid": { "color": "#5B6B69" } },
+            "showAxisTitle": false
+          }
+        ],
+        "legend": [
+          {
+            "show": true,
+            "fontFamily": "Segoe UI",
+            "fontSize": 10,
+            "labelColor": { "solid": { "color": "#31423F" } },
+            "position": "Top"
+          }
+        ],
+        "labels": [
+          {
+            "show": false,
+            "fontFamily": "Segoe UI Semibold",
+            "fontSize": 10,
+            "color": { "solid": { "color": "#101C1B" } }
+          }
+        ]
+      }
+    },
+    "donutChart": {
+      "*": {
+        "slice": [
+          { "innerRadiusRatio": 65 }
+        ]
+      }
+    },
+    "pieChart": {
+      "*": {
+        "slice": [
+          { "innerRadiusRatio": 0 }
+        ]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "grid": [
+          {
+            "gridVertical": false,
+            "gridHorizontal": true,
+            "gridHorizontalColor": { "solid": { "color": "#EDF1F1" } },
+            "rowPadding": 6,
+            "textSize": 10
+          }
+        ],
+        "columnHeaders": [
+          {
+            "fontColor": { "solid": { "color": "#5B6B69" } },
+            "backColor": { "solid": { "color": "#F5F6F8" } },
+            "bold": true,
+            "fontSize": 10,
+            "fontFamily": "Segoe UI Semibold"
+          }
+        ],
+        "values": [
+          {
+            "backColorPrimary": { "solid": { "color": "#FFFFFF" } },
+            "backColorSecondary": { "solid": { "color": "#FAFBFC" } },
+            "fontColorPrimary": { "solid": { "color": "#101C1B" } },
+            "fontSize": 10
+          }
+        ]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [
+          { "color": { "solid": { "color": "#0E7C86" } }, "fontSize": 28, "fontFamily": "Segoe UI Semibold" }
+        ],
+        "categoryLabels": [
+          { "color": { "solid": { "color": "#5B6B69" } }, "fontSize": 11, "fontFamily": "Segoe UI" }
+        ]
+      }
+    },
+    "multiRowCard": {
+      "*": {
+        "card": [
+          { "outlineColor": { "solid": { "color": "#E4E9EA" } }, "outlineWeight": 1 }
+        ],
+        "categoryLabels": [
+          { "color": { "solid": { "color": "#5B6B69" } }, "fontSize": 10, "fontFamily": "Segoe UI" }
+        ],
+        "dataLabels": [
+          { "color": { "solid": { "color": "#0E7C86" } }, "fontSize": 20, "fontFamily": "Segoe UI Semibold" }
+        ]
+      }
+    },
+    "slicer": {
+      "*": {
+        "background": [
+          { "show": true, "color": { "solid": { "color": "#FFFFFF" } } }
+        ],
+        "items": [
+          { "fontColor": { "solid": { "color": "#31423F" } }, "fontSize": 10 }
+        ],
+        "header": [
+          { "fontColor": { "solid": { "color": "#101C1B" } }, "background": { "solid": { "color": "#F5F6F8" } }, "fontSize": 10, "show": true }
+        ]
+      }
+    }
+  }
+}

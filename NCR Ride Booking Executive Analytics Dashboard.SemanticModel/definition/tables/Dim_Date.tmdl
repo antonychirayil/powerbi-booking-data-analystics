@@ -1,0 +1,166 @@
+table Dim_Date
+	lineageTag: aac26deb-df5b-4750-ae05-052ae93e51ae
+	dataCategory: Time
+
+	column Date
+		isUnique
+		lineageTag: 9b4778d1-0225-4e8c-8afa-aa6ec4efe435
+		isNameInferred
+		sourceColumn: [Date]
+
+	column Year
+		lineageTag: 40b6d27f-4702-4cf7-b7a3-6c9268cc473f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+	column 'Quarter Number'
+		isHidden
+		lineageTag: 6d8ca07d-280c-4888-a73e-791aa9ff54ee
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter Number]
+
+	column Quarter
+		lineageTag: 260ecb03-9fa7-4bfc-94c9-36af91bf7a90
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+		sortByColumn: 'Quarter Number'
+
+	column 'Year Quarter'
+		lineageTag: 51e75cdd-ae3c-415c-84ef-331ffcbba31c
+		isNameInferred
+		sourceColumn: [Year Quarter]
+
+	column 'Month Number'
+		isHidden
+		lineageTag: 6f720ee1-c424-4d8c-a2ab-fa89aa708c64
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Number]
+
+	column Month
+		lineageTag: 460c6477-f09d-4535-b881-f05142dbd98a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+		sortByColumn: 'Month Number'
+
+	column 'Month Short'
+		lineageTag: bd8398c5-e105-408e-9efe-3b233e051e5e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Short]
+		sortByColumn: 'Month Number'
+
+	column 'Year Month'
+		lineageTag: 248eb6dd-afe0-4224-8678-2be869837d74
+		isNameInferred
+		sourceColumn: [Year Month]
+
+	column 'Month Year'
+		lineageTag: 8f8b0a52-ed8e-4d87-824c-0bf430c80d28
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Year]
+		sortByColumn: 'Month Year Sort'
+
+	column 'Month Year Sort'
+		isHidden
+		lineageTag: 7f0a9bb0-5f8a-4fc6-9f98-4ab7fbb02f82
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Year Sort]
+
+	column 'Week Number'
+		lineageTag: 06089539-c7be-425e-8288-2979d4c6879b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Week Number]
+
+	column 'Year Week'
+		lineageTag: 6861b4a2-1175-4422-8193-37fc73350689
+		isNameInferred
+		sourceColumn: [Year Week]
+
+	column 'Week Start Date'
+		lineageTag: fcb59e95-f899-4cfb-9e2a-436abf712e50
+		isNameInferred
+		sourceColumn: [Week Start Date]
+
+	column Day
+		lineageTag: 84049402-8096-4eb1-8fbc-686934b3a277
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day]
+
+	column 'Day of Week Number'
+		isHidden
+		lineageTag: 6c965ae5-af7a-4015-858a-0f6a05690003
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day of Week Number]
+
+	column 'Day of Week'
+		lineageTag: 147f5041-9ba4-40a1-a316-615f360bad4f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day of Week]
+		sortByColumn: 'Day of Week Number'
+
+	column 'Day of Week Short'
+		lineageTag: 680d2e9b-3bea-44fe-ae39-3befe279d502
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day of Week Short]
+		sortByColumn: 'Day of Week Number'
+
+	column 'Day Type'
+		lineageTag: 9bde2197-fc05-4566-8bff-afb9094003ab
+		isNameInferred
+		sourceColumn: [Day Type]
+
+	column 'Is Weekend'
+		lineageTag: 70e719f5-3c7d-4c54-bfd6-b9e3e795f216
+		isNameInferred
+		sourceColumn: [Is Weekend]
+
+	column 'Date Key'
+		isHidden
+		lineageTag: b4254753-3ee1-4684-83e6-31ebeaec17c4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date Key]
+
+	partition Dim_Date = calculated
+		mode: import
+		source =
+				VAR _Min = MIN ( Fact_Rides[Ride Date] )
+				VAR _Max = MAX ( Fact_Rides[Ride Date] )
+				VAR _Calendar = CALENDAR ( DATE ( YEAR ( _Min ), 1, 1 ), DATE ( YEAR ( _Max ), 12, 31 ) )
+				RETURN
+				ADDCOLUMNS (
+				    _Calendar,
+				    "Year", YEAR ( [Date] ),
+				    "Quarter Number", QUARTER ( [Date] ),
+				    "Quarter", "Q" & QUARTER ( [Date] ),
+				    "Year Quarter", YEAR ( [Date] ) & "-Q" & QUARTER ( [Date] ),
+				    "Month Number", MONTH ( [Date] ),
+				    "Month", FORMAT ( [Date], "MMMM" ),
+				    "Month Short", FORMAT ( [Date], "MMM" ),
+				    "Year Month", FORMAT ( [Date], "yyyy-MM" ),
+				    "Month Year", FORMAT ( [Date], "MMM yyyy" ),
+				    "Month Year Sort", YEAR ( [Date] ) * 100 + MONTH ( [Date] ),
+				    "Week Number", WEEKNUM ( [Date], 2 ),
+				    "Year Week", YEAR ( [Date] ) & "-W" & FORMAT ( WEEKNUM ( [Date], 2 ), "00" ),
+				    "Week Start Date", [Date] - WEEKDAY ( [Date], 2 ) + 1,
+				    "Day", DAY ( [Date] ),
+				    "Day of Week Number", WEEKDAY ( [Date], 2 ),
+				    "Day of Week", FORMAT ( [Date], "dddd" ),
+				    "Day of Week Short", FORMAT ( [Date], "ddd" ),
+				    "Day Type", IF ( WEEKDAY ( [Date], 2 ) >= 6, "Weekend", "Weekday" ),
+				    "Is Weekend", WEEKDAY ( [Date], 2 ) >= 6,
+				    "Date Key", YEAR ( [Date] ) * 10000 + MONTH ( [Date] ) * 100 + DAY ( [Date] )
+				)
+

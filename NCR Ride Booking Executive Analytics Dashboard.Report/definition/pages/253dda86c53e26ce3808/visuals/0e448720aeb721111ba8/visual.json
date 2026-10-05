@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "0e448720aeb721111ba8",
+  "position": {
+    "x": 950,
+    "y": 20,
+    "z": 3000,
+    "height": 110,
+    "width": 300,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Driver Cancellation Rate"
+                }
+              },
+              "queryRef": "Fact_Rides.Driver Cancellation Rate",
+              "nativeQueryRef": "Driver Cancellation Rate"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

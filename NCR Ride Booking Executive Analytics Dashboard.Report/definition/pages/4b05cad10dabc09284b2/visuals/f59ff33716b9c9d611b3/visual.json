@@ -1,0 +1,70 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "f59ff33716b9c9d611b3",
+  "position": {
+    "x": 1180,
+    "y": 20,
+    "z": 1000,
+    "height": 310,
+    "width": 700,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Vehicle"
+                    }
+                  },
+                  "Property": "Vehicle Type"
+                }
+              },
+              "queryRef": "Dim_Vehicle.Vehicle Type",
+              "nativeQueryRef": "Vehicle Type",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Total Bookings"
+                }
+              },
+              "queryRef": "Fact_Rides.Total Bookings",
+              "nativeQueryRef": "Total Bookings"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Completed Rides"
+                }
+              },
+              "queryRef": "Fact_Rides.Completed Rides",
+              "nativeQueryRef": "Completed Rides"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

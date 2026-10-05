@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "NCR Ride Booking Executive Analytics Dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "92b56d3c-b1c4-47aa-94c2-81f23f832672"
+  }
+}

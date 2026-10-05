@@ -1,0 +1,567 @@
+table Fact_Rides
+	lineageTag: 9a433cff-2db3-4926-8677-dff4ca43f8e5
+
+	measure 'QA Rating Out Of Range' =
+			CALCULATE (
+			    COUNTROWS ( Fact_Rides ),
+			    FILTER (
+			        Fact_Rides,
+			        ( NOT ISBLANK ( Fact_Rides[Driver Rating] )
+			            && NOT ( Fact_Rides[Driver Rating] >= 1 && Fact_Rides[Driver Rating] <= 5 ) )
+			            || ( NOT ISBLANK ( Fact_Rides[Customer Rating] )
+			            && NOT ( Fact_Rides[Customer Rating] >= 1 && Fact_Rides[Customer Rating] <= 5 ) )
+			    )
+			)
+		formatString: #,0
+		displayFolder: J. Operational Quality\QA
+		lineageTag: e0c7d15c-7c11-4541-bca5-db25d8d51f57
+
+	measure 'QA Non Positive Value Or Distance' =
+			CALCULATE (
+			    COUNTROWS ( Fact_Rides ),
+			    FILTER (
+			        Fact_Rides,
+			        ( NOT ISBLANK ( Fact_Rides[Booking Value (INR)] ) && Fact_Rides[Booking Value (INR)] <= 0 )
+			            || ( NOT ISBLANK ( Fact_Rides[Ride Distance (km)] ) && Fact_Rides[Ride Distance (km)] <= 0 )
+			    )
+			)
+		formatString: #,0
+		displayFolder: J. Operational Quality\QA
+		lineageTag: 437f5040-ab60-4c43-992b-f9b000f49fc9
+
+	measure 'QA Rating On Unrated Status' =
+			CALCULATE (
+			    COUNTROWS ( Fact_Rides ),
+			    NOT ISBLANK ( Fact_Rides[Driver Rating] ),
+			    Dim_Booking_Status[Booking Status] <> "Completed"
+			)
+		formatString: #,0
+		displayFolder: J. Operational Quality\QA
+		lineageTag: 6afc0a78-f0fd-435d-a333-ded629954247
+
+	measure 'QA Revenue Without Payment Method' =
+			CALCULATE (
+			    COUNTROWS ( Fact_Rides ),
+			    NOT ISBLANK ( Fact_Rides[Booking Value (INR)] ),
+			    ISBLANK ( Fact_Rides[Payment Method] )
+			)
+		formatString: #,0
+		displayFolder: J. Operational Quality\QA
+		lineageTag: ac3d4ad2-51c1-453d-bb75-67b65e4f6bc1
+
+	measure 'QA Quoted Identifiers' =
+			CALCULATE (
+			    COUNTROWS ( Fact_Rides ),
+			    FILTER (
+			        Fact_Rides,
+			        SEARCH ( UNICHAR ( 34 ), Fact_Rides[Booking ID], 1, 0 ) > 0
+			            || SEARCH ( UNICHAR ( 34 ), Fact_Rides[Customer ID], 1, 0 ) > 0
+			    )
+			)
+		formatString: #,0
+		displayFolder: J. Operational Quality\QA
+		lineageTag: 776cfc49-8264-4dea-8c8a-834c71f5cf36
+
+	measure 'Total Bookings' = COUNTROWS ( Fact_Rides )
+		formatString: #,0
+		displayFolder: A. Core KPI
+		lineageTag: 2cc3e020-15bc-46bd-b20b-072b3d24f87b
+
+	measure 'Completed Rides' =
+			CALCULATE (
+			    [Total Bookings],
+			    KEEPFILTERS ( Dim_Booking_Status[Booking Status] = "Completed" )
+			)
+		formatString: #,0
+		displayFolder: A. Core KPI
+		lineageTag: 936b1b88-3ea5-4d7c-9616-858c7e413034
+
+	measure 'Completion Rate' = DIVIDE ( [Completed Rides], [Total Bookings] )
+		formatString: 0.0%
+		displayFolder: A. Core KPI
+		lineageTag: 806374e1-5cb5-4e26-aa25-d83c77339178
+
+	measure 'Total Booking Value' = SUM ( Fact_Rides[Booking Value (INR)] )
+		formatString: "₹"#,0
+		displayFolder: A. Core KPI
+		lineageTag: 8005abbb-1d78-4480-955f-79ac0903ac46
+
+	measure 'Total Ride Distance' = SUM ( Fact_Rides[Ride Distance (km)] )
+		formatString: #,0.0
+		displayFolder: A. Core KPI
+		lineageTag: f4f96a0c-d38a-49ae-822a-69deb1bb30b2
+
+	measure 'Cancelled by Customer' =
+			CALCULATE (
+			    [Total Bookings],
+			    KEEPFILTERS ( Dim_Booking_Status[Booking Status] = "Cancelled by Customer" )
+			)
+		formatString: #,0
+		displayFolder: B. Booking
+		lineageTag: ba19a9d5-6810-47d3-a1df-4597bf948703
+
+	measure 'Cancelled by Driver' =
+			CALCULATE (
+			    [Total Bookings],
+			    KEEPFILTERS ( Dim_Booking_Status[Booking Status] = "Cancelled by Driver" )
+			)
+		formatString: #,0
+		displayFolder: B. Booking
+		lineageTag: 9dacaf1e-fa6e-4425-8bb8-265c68ba5b75
+
+	measure 'No Driver Found' =
+			CALCULATE (
+			    [Total Bookings],
+			    KEEPFILTERS ( Dim_Booking_Status[Booking Status] = "No Driver Found" )
+			)
+		formatString: #,0
+		displayFolder: B. Booking
+		lineageTag: 2b952e46-f539-40f6-b8cd-892f2dbfbeba
+
+	measure 'Incomplete Rides' =
+			CALCULATE (
+			    [Total Bookings],
+			    KEEPFILTERS ( Dim_Booking_Status[Booking Status] = "Incomplete" )
+			)
+		formatString: #,0
+		displayFolder: B. Booking
+		lineageTag: 9c625890-b310-4826-bb85-a79c44e56968
+
+	measure 'Cancellation Count' =
+			CALCULATE (
+			    [Total Bookings],
+			    KEEPFILTERS ( Dim_Booking_Status[Status Group] = "Cancelled" )
+			)
+		formatString: #,0
+		displayFolder: B. Booking
+		lineageTag: b5367ec6-c05b-4b49-bb30-a6a23765539a
+
+	measure 'Operational Rides' =
+			CALCULATE (
+			    [Total Bookings],
+			    KEEPFILTERS ( Dim_Booking_Status[Booking Status] <> "No Driver Found" )
+			)
+		formatString: #,0
+		displayFolder: B. Booking
+		lineageTag: 47b33cd4-d1e4-4662-9d22-0d26abd96990
+
+	measure 'Billed Rides' =
+			CALCULATE (
+			    [Total Bookings],
+			    KEEPFILTERS ( Dim_Booking_Status[Is Revenue Generating] = TRUE )
+			)
+		formatString: #,0
+		displayFolder: B. Booking
+		lineageTag: 7999e80a-7706-4f6b-843d-ab3721629368
+
+	measure 'Completed Ride Revenue' =
+			CALCULATE (
+			    [Total Booking Value],
+			    KEEPFILTERS ( Dim_Booking_Status[Booking Status] = "Completed" )
+			)
+		formatString: "₹"#,0
+		displayFolder: C. Revenue
+		lineageTag: 72063c96-f93d-4870-9666-bdf559441994
+
+	measure 'Average Booking Value' = AVERAGE ( Fact_Rides[Booking Value (INR)] )
+		formatString: "₹"#,0.00
+		displayFolder: C. Revenue
+		lineageTag: 0921f008-ab7b-426b-beac-83d5b9982580
+
+	measure 'Average Completed Ride Value' = DIVIDE ( [Completed Ride Revenue], [Completed Rides] )
+		formatString: "₹"#,0.00
+		displayFolder: C. Revenue
+		lineageTag: 7066f39a-c4ba-4dfd-beee-efabb951595e
+
+	measure 'Revenue per KM' = DIVIDE ( [Total Booking Value], [Total Ride Distance] )
+		formatString: "₹"#,0.00
+		displayFolder: C. Revenue
+		lineageTag: f28e9f75-363d-46bc-a81d-3e6a526754c6
+
+	measure 'Revenue Share %' =
+			DIVIDE (
+			    [Total Booking Value],
+			    CALCULATE ( [Total Booking Value], ALLSELECTED () )
+			)
+		formatString: 0.0%
+		displayFolder: C. Revenue
+		lineageTag: 962a084c-f450-422a-94c2-9b458e54577b
+
+	measure 'Average Ride Distance' = AVERAGE ( Fact_Rides[Ride Distance (km)] )
+		formatString: #,0.00
+		displayFolder: D. Distance
+		lineageTag: f9be3118-ba45-4e39-90db-beac887712e2
+
+	measure 'Distance Share %' =
+			DIVIDE (
+			    [Total Ride Distance],
+			    CALCULATE ( [Total Ride Distance], ALLSELECTED () )
+			)
+		formatString: 0.0%
+		displayFolder: D. Distance
+		lineageTag: 69190bde-c1d8-4524-a59c-ff60067e8665
+
+	measure 'Customer Cancellation Rate' = DIVIDE ( [Cancelled by Customer], [Total Bookings] )
+		formatString: 0.0%
+		displayFolder: E. Cancellation
+		lineageTag: fe3e4ddc-5874-477f-8af9-3678229f75b7
+
+	measure 'Driver Cancellation Rate' = DIVIDE ( [Cancelled by Driver], [Total Bookings] )
+		formatString: 0.0%
+		displayFolder: E. Cancellation
+		lineageTag: 2c59982f-7554-43d0-9e0c-720441b328df
+
+	measure 'Cancellation Rate' = DIVIDE ( [Cancellation Count], [Total Bookings] )
+		formatString: 0.0%
+		displayFolder: E. Cancellation
+		lineageTag: 9e506e90-f0da-4869-b579-196e59a5438b
+
+	measure 'No Driver Found Rate' = DIVIDE ( [No Driver Found], [Total Bookings] )
+		formatString: 0.0%
+		displayFolder: E. Cancellation
+		lineageTag: 8bab9bee-6aca-45a9-8f58-97149d1ca0b2
+
+	measure 'Incomplete Ride Rate' = DIVIDE ( [Incomplete Rides], [Total Bookings] )
+		formatString: 0.0%
+		displayFolder: E. Cancellation
+		lineageTag: 8256d70e-7136-413f-b310-1405c9f21833
+
+	measure 'Unique Customers' = DISTINCTCOUNT ( Fact_Rides[Customer ID] )
+		formatString: #,0
+		displayFolder: F. Customer
+		lineageTag: 8cc6a316-941b-4e51-8d9c-574a27824169
+
+	measure 'Average Rides per Customer' = DIVIDE ( [Total Bookings], [Unique Customers] )
+		formatString: #,0.000
+		displayFolder: F. Customer
+		lineageTag: a75c7203-2bce-41c9-b405-041517f604b3
+
+	measure 'Revenue per Customer' = DIVIDE ( [Total Booking Value], [Unique Customers] )
+		formatString: "₹"#,0.00
+		displayFolder: F. Customer
+		lineageTag: 0dc777d6-7d9e-4032-a9bf-de54e8be83c2
+
+	measure 'Average Driver Rating' = AVERAGE ( Fact_Rides[Driver Rating] )
+		formatString: 0.00
+		displayFolder: H. Rating
+		lineageTag: a8207b1c-193e-4523-bbfe-d186189ac76c
+
+	measure 'Average Customer Rating' = AVERAGE ( Fact_Rides[Customer Rating] )
+		formatString: 0.00
+		displayFolder: H. Rating
+		lineageTag: 5dd7c9b0-cca8-4ab9-a75d-8c19894b8fa7
+
+	measure 'Rated Rides' = COUNT ( Fact_Rides[Driver Rating] )
+		formatString: #,0
+		displayFolder: H. Rating
+		lineageTag: caf7b82b-0ce0-44ba-878b-91e2de916cb1
+
+	measure 'Rating Gap' = [Average Customer Rating] - [Average Driver Rating]
+		formatString: +0.00;-0.00;0.00
+		displayFolder: H. Rating
+		lineageTag: 01924172-b2f9-4010-a796-d418e1d3607e
+
+	measure 'Rides YTD' = TOTALYTD ( [Total Bookings], Dim_Date[Date] )
+		formatString: #,0
+		displayFolder: I. Time Intelligence
+		lineageTag: df5a1521-b447-4978-9e52-d3aec9526a98
+
+	measure 'Revenue YTD' = TOTALYTD ( [Total Booking Value], Dim_Date[Date] )
+		formatString: "₹"#,0
+		displayFolder: I. Time Intelligence
+		lineageTag: ab5ba316-631f-432b-8737-5aa1c61a0504
+
+	measure 'Rides Previous Month' = CALCULATE ( [Total Bookings], DATEADD ( Dim_Date[Date], -1, MONTH ) )
+		formatString: #,0
+		displayFolder: I. Time Intelligence
+		lineageTag: 34e56765-c2b6-4495-8f80-a9543a972ff9
+
+	measure 'Rides MoM %' =
+			DIVIDE (
+			    [Total Bookings] - [Rides Previous Month],
+			    [Rides Previous Month]
+			)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: I. Time Intelligence
+		lineageTag: d5ffd8a4-6ed0-4662-90de-bf535fac08c6
+
+	measure 'Revenue Previous Month' = CALCULATE ( [Total Booking Value], DATEADD ( Dim_Date[Date], -1, MONTH ) )
+		formatString: "₹"#,0
+		displayFolder: I. Time Intelligence
+		lineageTag: 427bca84-a1d5-4869-88e6-c6713c312188
+
+	measure 'Revenue MoM %' =
+			DIVIDE (
+			    [Total Booking Value] - [Revenue Previous Month],
+			    [Revenue Previous Month]
+			)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: I. Time Intelligence
+		lineageTag: d75e6a02-7c47-4b96-abe9-710ee206cead
+
+	measure 'Rides Rolling 7-Day Avg' =
+			AVERAGEX (
+			    DATESINPERIOD ( Dim_Date[Date], MAX ( Dim_Date[Date] ), -7, DAY ),
+			    [Total Bookings]
+			)
+		formatString: #,0.0
+		displayFolder: I. Time Intelligence
+		lineageTag: cb148f3f-a5a5-428a-9dd5-87dd160e5da3
+
+	measure 'Average Pickup Wait (min)' = AVERAGE ( Fact_Rides[Avg Pickup Wait (min)] )
+		formatString: 0.00
+		displayFolder: J. Operational Quality
+		lineageTag: 85d1f2c2-c549-4662-ab11-e1a9ec14f581
+
+	measure 'Average Trip Duration (min)' = AVERAGE ( Fact_Rides[Avg Trip Duration (min)] )
+		formatString: 0.00
+		displayFolder: J. Operational Quality
+		lineageTag: b1a09d43-cdb7-42e4-b79e-da5f37000f44
+
+	measure 'Driver Allocation Rate' = DIVIDE ( [Operational Rides], [Total Bookings] )
+		formatString: 0.0%
+		displayFolder: J. Operational Quality
+		lineageTag: 4ff1f9a8-de6d-482c-9aa7-be8ef0aa6f07
+
+	measure 'Completed Ride Distance' = CALCULATE ( [Total Ride Distance], KEEPFILTERS ( Dim_Booking_Status[Booking Status] = "Completed" ) )
+		formatString: #,0.0
+		displayFolder: D. Distance
+		lineageTag: 140caffb-c871-4668-884b-beeecaf7fb75
+
+	measure 'Customer Value Rank' = IF ( ISBLANK ( [Total Booking Value] ), BLANK(), RANKX ( ALLSELECTED ( Fact_Rides[Customer ID] ), [Total Booking Value],, DESC, DENSE ) )
+		formatString: #,0
+		displayFolder: F. Customer
+		lineageTag: 7fafdab0-3080-4c04-aa51-06fcdc56fae7
+
+	measure 'Customer Rated Rides' = COUNT ( Fact_Rides[Customer Rating] )
+		formatString: #,0
+		displayFolder: H. Rating
+		lineageTag: 7c39ea3c-eaf5-42ea-9a52-d9adf2728464
+
+	measure 'Overall Performance Insight' = "Of " & FORMAT ( [Total Bookings], "#,0" ) & " bookings, " & FORMAT ( [Completion Rate], "0.0%" ) & " completed successfully, while " & FORMAT ( [Cancellation Rate], "0.0%" ) & " were cancelled and " & FORMAT ( [No Driver Found Rate], "0.0%" ) & " found no driver."
+		displayFolder: K. Insights
+		lineageTag: 5b2d168c-7690-4119-8876-0760dd93ccb5
+
+	measure 'Highest Cancellation Vehicle Insight' =
+			VAR _Table =
+			    ADDCOLUMNS ( VALUES ( Dim_Vehicle[Vehicle Type] ), "RateVal", [Cancellation Rate] )
+			VAR _Top = TOPN ( 1, _Table, [RateVal], DESC )
+			VAR _Name = MAXX ( _Top, Dim_Vehicle[Vehicle Type] )
+			VAR _Rate = MAXX ( _Top, [RateVal] )
+			RETURN
+			    _Name & " has the highest cancellation rate at " & FORMAT ( _Rate, "0.0%" ) & " of its bookings."
+		displayFolder: K. Insights
+		lineageTag: e6cb77c1-3bc7-456b-a93d-adfb90fe3ab4
+
+	measure 'Rating Distribution Insight' =
+			VAR _3 = CALCULATE ( [Rated Rides], Fact_Rides[Driver Rating Band] = "3★" )
+			VAR _4 = CALCULATE ( [Rated Rides], Fact_Rides[Driver Rating Band] = "4★" )
+			VAR _5 = CALCULATE ( [Rated Rides], Fact_Rides[Driver Rating Band] = "5★" )
+			VAR _Total = [Rated Rides]
+			RETURN
+			    FORMAT ( DIVIDE ( _4, _Total ), "0.0%" ) & " of rated rides land in the 4★ band, vs " & FORMAT ( DIVIDE ( _3, _Total ), "0.0%" ) & " at 3★ and " & FORMAT ( DIVIDE ( _5, _Total ), "0.0%" ) & " at 5★."
+		displayFolder: K. Insights
+		lineageTag: 36a43784-0770-485e-816c-df47862d3699
+
+	column 'Ride Key'
+		dataType: int64
+		isHidden
+		isKey
+		lineageTag: f81bab55-3650-4b50-9ee4-7e53296dee83
+		summarizeBy: none
+		sourceColumn: Ride Key
+
+	column 'Booking ID'
+		dataType: string
+		lineageTag: 1d4c971e-fa18-4de9-bec0-14eb9514ebb3
+		summarizeBy: none
+		sourceColumn: Booking ID
+
+	column 'Customer ID'
+		dataType: string
+		lineageTag: 84595e68-d0c4-4232-9c02-c519d2929af1
+		summarizeBy: none
+		sourceColumn: Customer ID
+
+	column 'Ride Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 3d079ad2-ca42-4281-8a1b-a8124e62b394
+		summarizeBy: none
+		sourceColumn: Ride Date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Ride Time'
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 16c30dcf-7f44-4608-a2dc-ef07bcd341a4
+		summarizeBy: none
+		sourceColumn: Ride Time
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column 'Booking DateTime'
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 89567be0-7076-408a-a964-474aa76b225d
+		summarizeBy: none
+		sourceColumn: Booking DateTime
+
+	column 'Ride Hour'
+		dataType: int64
+		formatString: 0
+		lineageTag: c3553ea3-68d0-4a31-9166-fbc90377224e
+		summarizeBy: none
+		sourceColumn: Ride Hour
+
+	column 'Time of Day'
+		dataType: string
+		lineageTag: 1a34e490-7907-41d5-b03b-2863c1eb082e
+		summarizeBy: none
+		sourceColumn: Time of Day
+
+	column 'Booking Status'
+		dataType: string
+		isHidden
+		lineageTag: e99deb97-f03b-4e91-b21b-f50bc98d4601
+		summarizeBy: none
+		sourceColumn: Booking Status
+
+	column 'Vehicle Type'
+		dataType: string
+		isHidden
+		lineageTag: ae53f225-850a-42d5-990e-ab6cefa2e249
+		summarizeBy: none
+		sourceColumn: Vehicle Type
+
+	column 'Pickup Location'
+		dataType: string
+		lineageTag: 9cc57441-3c4a-40c8-99da-ce8aec0947b0
+		summarizeBy: none
+		sourceColumn: Pickup Location
+
+	column 'Drop Location'
+		dataType: string
+		lineageTag: 3c9bf2f8-f4ff-4394-aff0-f31072f26ee4
+		summarizeBy: none
+		sourceColumn: Drop Location
+
+	column 'Avg Pickup Wait (min)'
+		dataType: double
+		lineageTag: ad058bf1-b599-4890-bffa-f695924e5ae6
+		summarizeBy: average
+		sourceColumn: Avg Pickup Wait (min)
+
+	column 'Avg Trip Duration (min)'
+		dataType: double
+		lineageTag: 20bae8fe-b8e1-4c85-9c43-9fb7e954ff29
+		summarizeBy: average
+		sourceColumn: Avg Trip Duration (min)
+
+	column 'Booking Value (INR)'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 6f7d251b-054e-41fa-9dcd-9de6065893be
+		summarizeBy: sum
+		sourceColumn: Booking Value (INR)
+
+	column 'Payment Method'
+		dataType: string
+		isHidden
+		lineageTag: f2d4185e-c1e1-4c7b-847a-9cae0b5a5fdf
+		summarizeBy: none
+		sourceColumn: Payment Method
+
+	column 'Ride Distance (km)'
+		dataType: double
+		formatString: #,0.00
+		lineageTag: ef66faa3-01bd-4c63-a698-4c8d02d35ec6
+		summarizeBy: sum
+		sourceColumn: Ride Distance (km)
+
+	column 'Distance Band'
+		dataType: string
+		lineageTag: 45437954-17ac-48fc-92cb-7a8f31e391bc
+		summarizeBy: none
+		sourceColumn: Distance Band
+
+	column 'Driver Rating'
+		dataType: double
+		formatString: 0.00
+		lineageTag: ec97803c-9739-48cd-b6a7-281b0bf497a0
+		summarizeBy: average
+		sourceColumn: Driver Rating
+
+	column 'Customer Rating'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 8dcdc765-9635-425b-bf64-b18670f0bdc2
+		summarizeBy: average
+		sourceColumn: Customer Rating
+
+	column 'Customer Cancellation Reason'
+		dataType: string
+		lineageTag: 5558be43-dcd4-4e39-9b6e-f969dcd0b594
+		summarizeBy: none
+		sourceColumn: Customer Cancellation Reason
+
+	column 'Driver Cancellation Reason'
+		dataType: string
+		lineageTag: 5b7437ee-679e-48aa-a63f-1d0fbe9cb868
+		summarizeBy: none
+		sourceColumn: Driver Cancellation Reason
+
+	column 'Incomplete Ride Reason'
+		dataType: string
+		lineageTag: 129e2d1f-8c29-45a5-8538-75b98dfed7a6
+		summarizeBy: none
+		sourceColumn: Incomplete Ride Reason
+
+	column 'Driver Rating Band' = IF ( ISBLANK ( Fact_Rides[Driver Rating] ), BLANK(), FORMAT ( TRUNC ( Fact_Rides[Driver Rating] ), "0" ) & "★" )
+		dataType: string
+		displayFolder: Rating Bands
+		lineageTag: 7d267dcb-ffe6-400e-b9c2-a9067fcc4b3c
+
+	column 'Customer Rating Band' = IF ( ISBLANK ( Fact_Rides[Customer Rating] ), BLANK(), FORMAT ( TRUNC ( Fact_Rides[Customer Rating] ), "0" ) & "★" )
+		dataType: string
+		displayFolder: Rating Bands
+		lineageTag: cf86d1c9-7cba-4fc5-9255-669613c8c049
+
+	partition Fact_Rides = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\MYPC\OneDrive\Documents\BIA\Power BI\August Assignment\ncr_ride_bookings.csv"), [Delimiter = ",", Columns = 21, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    RealNulls = Table.ReplaceValue(Headers, "null", null, Replacer.ReplaceValue, Table.ColumnNames(Headers)),
+				    Q = Character.FromNumber(34),
+				    CleanIds = Table.TransformColumns(RealNulls, {
+				        {"Booking ID", each Text.Trim(Text.Remove(_, {Q})), type text},
+				        {"Customer ID", each Text.Trim(Text.Remove(_, {Q})), type text}
+				    }),
+				    Trimmed = Table.TransformColumns(CleanIds, {
+				        {"Booking Status", each if _ = null then null else Text.Trim(Text.Clean(_)), type text},
+				        {"Vehicle Type", each if _ = null then null else Text.Trim(Text.Clean(_)), type text},
+				        {"Pickup Location", each if _ = null then null else Text.Trim(Text.Clean(_)), type text},
+				        {"Drop Location", each if _ = null then null else Text.Trim(Text.Clean(_)), type text},
+				        {"Reason for cancelling by Customer", each if _ = null then null else Text.Trim(Text.Clean(_)), type text},
+				        {"Driver Cancellation Reason", each if _ = null then null else Text.Trim(Text.Clean(_)), type text},
+				        {"Incomplete Rides Reason", each if _ = null then null else Text.Trim(Text.Clean(_)), type text},
+				        {"Payment Method", each if _ = null then null else Text.Trim(Text.Clean(_)), type text}
+				    }),
+				    Dropped = Table.RemoveColumns(Trimmed, {"Cancelled Rides by Customer", "Cancelled Rides by Driver", "Incomplete Rides"}),
+				    Typed = Table.TransformColumnTypes(Dropped, {{"Date", type date}, {"Time", type time}, {"Booking ID", type text}, {"Booking Status", type text}, {"Customer ID", type text}, {"Vehicle Type", type text}, {"Pickup Location", type text}, {"Drop Location", type text}, {"Avg VTAT", type number}, {"Avg CTAT", type number}, {"Reason for cancelling by Customer", type text}, {"Driver Cancellation Reason", type text}, {"Incomplete Rides Reason", type text}, {"Booking Value", Int64.Type}, {"Ride Distance", type number}, {"Driver Ratings", type number}, {"Customer Rating", type number}, {"Payment Method", type text}}, "en-US"),
+				    WithDateTime = Table.AddColumn(Typed, "Booking DateTime", each [Date] & [Time], type datetime),
+				    WithHour = Table.AddColumn(WithDateTime, "Ride Hour", each Time.Hour([Time]), Int64.Type),
+				    WithDaypart = Table.AddColumn(WithHour, "Time of Day", each if [Ride Hour] < 5 then "Late Night (00-04)" else if [Ride Hour] < 12 then "Morning (05-11)" else if [Ride Hour] < 17 then "Afternoon (12-16)" else if [Ride Hour] < 21 then "Evening (17-20)" else "Night (21-23)", type text),
+				    WithBand = Table.AddColumn(WithDaypart, "Distance Band", each if [Ride Distance] = null then null else if [Ride Distance] <= 5 then "00-05 km" else if [Ride Distance] <= 10 then "05-10 km" else if [Ride Distance] <= 20 then "10-20 km" else if [Ride Distance] <= 30 then "20-30 km" else if [Ride Distance] <= 40 then "30-40 km" else "40-50 km", type text),
+				    SortedForKey = Table.Sort(WithBand, {{"Booking DateTime", Order.Ascending}, {"Booking ID", Order.Ascending}}),
+				    Keyed = Table.AddIndexColumn(SortedForKey, "Ride Key", 1, 1, Int64.Type),
+				    Renamed = Table.RenameColumns(Keyed, {{"Date", "Ride Date"}, {"Time", "Ride Time"}, {"Avg VTAT", "Avg Pickup Wait (min)"}, {"Avg CTAT", "Avg Trip Duration (min)"}, {"Booking Value", "Booking Value (INR)"}, {"Ride Distance", "Ride Distance (km)"}, {"Driver Ratings", "Driver Rating"}, {"Reason for cancelling by Customer", "Customer Cancellation Reason"}, {"Incomplete Rides Reason", "Incomplete Ride Reason"}}),
+				    Final = Table.ReorderColumns(Renamed, {"Ride Key", "Booking ID", "Customer ID", "Ride Date", "Ride Time", "Booking DateTime", "Ride Hour", "Time of Day", "Booking Status", "Vehicle Type", "Pickup Location", "Drop Location", "Avg Pickup Wait (min)", "Avg Trip Duration (min)", "Booking Value (INR)", "Payment Method", "Ride Distance (km)", "Distance Band", "Driver Rating", "Customer Rating", "Customer Cancellation Reason", "Driver Cancellation Reason", "Incomplete Ride Reason"})
+				in
+				    Final
+

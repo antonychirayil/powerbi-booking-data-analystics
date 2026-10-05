@@ -1,0 +1,40 @@
+table Dim_Vehicle
+	lineageTag: e86060c8-cfc1-452c-9876-dcbe61e74954
+
+	column 'Vehicle Type'
+		lineageTag: 23ed4288-bb23-429f-a968-683eaef41662
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Vehicle Type]
+		sortByColumn: 'Vehicle Sort'
+
+	column 'Vehicle Category'
+		lineageTag: 7c80eca2-58a5-4fb4-81e1-d7a181a71c77
+		isNameInferred
+		sourceColumn: [Vehicle Category]
+
+	column 'Vehicle Sort'
+		isHidden
+		lineageTag: 10deb11c-a320-40ac-8fc2-ed7a0b18dd39
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Vehicle Sort]
+
+	partition Dim_Vehicle = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Vehicle Type", STRING,
+				    "Vehicle Category", STRING,
+				    "Vehicle Sort", INTEGER,
+				    {
+				        { "Bike", "Two-Wheeler", 1 },
+				        { "eBike", "Two-Wheeler", 2 },
+				        { "Auto", "Auto", 3 },
+				        { "Go Mini", "Hatchback", 4 },
+				        { "Go Sedan", "Sedan", 5 },
+				        { "Premier Sedan", "Sedan", 6 },
+				        { "Uber XL", "SUV / XL", 7 }
+				    }
+				)
+

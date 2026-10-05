@@ -1,0 +1,100 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 110.49172089400032
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 293.9794425152877,
+            "y": 559.26519928287269
+          },
+          "nodeIndex": "Fact_Rides",
+          "nodeLineageTag": "9a433cff-2db3-4926-8677-dff4ca43f8e5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 62
+          },
+          "nodeIndex": "Dim_Booking_Status",
+          "nodeLineageTag": "330fa99c-164e-4bbe-8f3b-6a87b37b8180",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 284,
+            "y": 0
+          },
+          "nodeIndex": "Dim_Date",
+          "nodeLineageTag": "aac26deb-df5b-4750-ae05-052ae93e51ae",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 568,
+            "y": 74
+          },
+          "nodeIndex": "Dim_Payment_Method",
+          "nodeLineageTag": "b7bf071a-4ebd-43e3-a429-74efa8329922",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 852,
+            "y": 74
+          },
+          "nodeIndex": "Dim_Vehicle",
+          "nodeLineageTag": "e86060c8-cfc1-452c-9876-dcbe61e74954",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1136,
+            "y": 353.63259964143634
+          },
+          "nodeIndex": "Ride Volume Granularity",
+          "nodeLineageTag": "21b2591d-dfe5-422a-bf88-f4766c45d019",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 70.955543900969332,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

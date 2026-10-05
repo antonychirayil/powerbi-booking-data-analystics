@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "8417cdc4d9b688042140",
+  "position": {
+    "x": 490,
+    "y": 20,
+    "z": 1000,
+    "height": 110,
+    "width": 450,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Average Customer Rating"
+                }
+              },
+              "queryRef": "Fact_Rides.Average Customer Rating",
+              "nativeQueryRef": "Average Customer Rating"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+table Dim_Payment_Method
+	lineageTag: b7bf071a-4ebd-43e3-a429-74efa8329922
+
+	column 'Payment Method'
+		lineageTag: eec99a34-e72d-4e59-a59a-94ed9fafec2c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Payment Method]
+		sortByColumn: 'Payment Sort'
+
+	column 'Payment Category'
+		lineageTag: 526baf5c-d09e-4b00-b37e-5440c1fed948
+		isNameInferred
+		sourceColumn: [Payment Category]
+
+	column 'Payment Sort'
+		isHidden
+		lineageTag: 5a9830f0-3047-4403-a005-bc797a778445
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Payment Sort]
+
+	partition Dim_Payment_Method = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Payment Method", STRING,
+				    "Payment Category", STRING,
+				    "Payment Sort", INTEGER,
+				    {
+				        { "UPI", "Digital", 1 },
+				        { "Cash", "Cash", 2 },
+				        { "Uber Wallet", "Digital", 3 },
+				        { "Credit Card", "Card", 4 },
+				        { "Debit Card", "Card", 5 }
+				    }
+				)
+

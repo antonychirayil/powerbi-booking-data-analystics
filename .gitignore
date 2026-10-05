@@ -1,0 +1,6 @@
+cat > .gitignore << 'EOF'
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+*.tmp
+~$*
+EOF

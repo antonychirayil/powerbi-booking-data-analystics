@@ -1,0 +1,44 @@
+table Dim_Booking_Status
+	lineageTag: 330fa99c-164e-4bbe-8f3b-6a87b37b8180
+
+	column 'Booking Status'
+		lineageTag: b34c089f-d32f-48b1-9d59-9768fe12441e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Booking Status]
+		sortByColumn: 'Status Sort'
+
+	column 'Status Group'
+		lineageTag: d2fb5ac4-8e24-4f0d-bf4c-ab4856fb5705
+		isNameInferred
+		sourceColumn: [Status Group]
+
+	column 'Is Revenue Generating'
+		lineageTag: a57d5ba0-17d8-4604-a248-54dac9d4e551
+		isNameInferred
+		sourceColumn: [Is Revenue Generating]
+
+	column 'Status Sort'
+		isHidden
+		lineageTag: e717e7c5-7bd4-49cd-8ef2-e58a2733b4c6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Status Sort]
+
+	partition Dim_Booking_Status = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Booking Status", STRING,
+				    "Status Group", STRING,
+				    "Is Revenue Generating", BOOLEAN,
+				    "Status Sort", INTEGER,
+				    {
+				        { "Completed", "Successful", TRUE, 1 },
+				        { "Incomplete", "Failed", TRUE, 2 },
+				        { "Cancelled by Customer", "Cancelled", FALSE, 3 },
+				        { "Cancelled by Driver", "Cancelled", FALSE, 4 },
+				        { "No Driver Found", "Unfulfilled", FALSE, 5 }
+				    }
+				)
+

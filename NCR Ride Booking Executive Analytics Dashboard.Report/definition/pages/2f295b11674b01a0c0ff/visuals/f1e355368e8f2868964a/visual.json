@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.4.0/schema.json",
+  "name": "f1e355368e8f2868964a",
+  "position": {
+    "x": 20,
+    "y": 20,
+    "z": 0,
+    "width": 450,
+    "height": 110,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Average Driver Rating"
+                }
+              },
+              "queryRef": "Fact_Rides.Average Driver Rating",
+              "nativeQueryRef": "Average Driver Rating"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+table 'Ride Volume Granularity'
+	lineageTag: 21b2591d-dfe5-422a-bf88-f4766c45d019
+
+	column 'Ride Volume Granularity Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 189986e2-649e-4ad1-8af1-e76a75500166
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+	column 'Ride Volume Granularity Fields'
+		dataType: string
+		isHidden
+		lineageTag: f98bd3f6-82cd-43a3-b726-67c15a02b7d5
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Ride Volume Granularity Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+	column 'Ride Volume Granularity'
+		dataType: string
+		lineageTag: 7b651106-c2dd-4b06-a98c-87c42337a518
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Ride Volume Granularity Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Ride Volume Granularity Fields'
+
+	partition 'Ride Volume Granularity' = calculated
+		mode: import
+		source =
+				{
+				    ("Daily", NAMEOF('Dim_Date'[Date]), 0),
+				    ("Weekly", NAMEOF('Dim_Date'[Week Start Date]), 1),
+				    ("Monthly", NAMEOF('Dim_Date'[Month Year]), 2)
+				}
+

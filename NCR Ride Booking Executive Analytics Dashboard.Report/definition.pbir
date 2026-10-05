@@ -1,0 +1,8 @@
+{
+  "version": "4.0",
+  "datasetReference": {
+    "byPath": {
+      "path": "../NCR Ride Booking Executive Analytics Dashboard.SemanticModel"
+    }
+  }
+}

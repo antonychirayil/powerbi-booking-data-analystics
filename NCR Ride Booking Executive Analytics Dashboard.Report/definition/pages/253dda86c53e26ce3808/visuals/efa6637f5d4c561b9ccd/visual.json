@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "efa6637f5d4c561b9ccd",
+  "position": {
+    "x": 330,
+    "y": 20,
+    "z": 1000,
+    "height": 110,
+    "width": 300,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_Rides"
+                    }
+                  },
+                  "Property": "Cancelled by Driver"
+                }
+              },
+              "queryRef": "Fact_Rides.Cancelled by Driver",
+              "nativeQueryRef": "Cancelled by Driver"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
